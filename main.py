@@ -44,7 +44,7 @@ def send_log_to_datadog(event, context):
 
             # Create the log item with direct JSON format
             log_item = HTTPLogItem(
-                message=message_data.get("message", ""),
+                message=pubsub_message,  # Sending the entire Pub/Sub message for detailed logging
                 ddsource="pubsub",
                 ddtags=f"env:production,function:{context.function_name if hasattr(context, 'function_name') else 'local-test'}",
                 hostname=context.resource.get("name", "unknown") if hasattr(context, 'resource') else "local-test",
