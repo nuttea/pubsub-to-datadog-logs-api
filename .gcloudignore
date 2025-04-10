@@ -1,0 +1,6 @@
+requitements.in
+LICENSE
+.venv
+.git
+.gitignore
+__pycache__
