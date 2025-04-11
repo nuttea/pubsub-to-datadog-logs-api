@@ -3,6 +3,14 @@ Google Cloud PusSub message to Datadog Logs API using Cloud Functions
 
 ## Preparation
 
+gcloud login and set project
+
+```
+PROJECT_ID=<YOUR_PROJECT_ID>
+gcloud auth login
+gcloud config set project $PROJECT_ID
+```
+
 Create a python virtual environment
 
 ```
@@ -43,12 +51,16 @@ curl https://r.jina.ai/https://docs.datadoghq.com/api/latest/logs/   -H "X-Retur
 export FUNCTION_NAME=nuttee-alerts-to-datadog-logs-api
 export PUBSUB_TOPIC=nuttee-alerts-to-pubsub
 export REGION=us-central1
+export GOOGLE_CLOUD_PROJECT=$PROJECT_ID
+export GOOGLE_CLOUD_LOCATION=us-central1
+export GOOGLE_GENAI_USE_VERTEXAI=True
+
 gcloud functions deploy $FUNCTION_NAME \
   --gen2 \
   --runtime=python312 \
   --source=. \
-  --entry-point=send_log_to_datadog \
+  --entry-point=send_event_to_datadog \
   --trigger-topic=$PUBSUB_TOPIC \
   --region=us-central1 \
-  --set-env-vars=DD_SITE=$DD_SITE,DD_API_KEY=$DD_API_KEY
+  --set-env-vars=DD_SITE=$DD_SITE,DD_API_KEY=$DD_API_KEY,GOOGLE_CLOUD_PROJECT=$GOOGLE_CLOUD_PROJECT,GOOGLE_CLOUD_LOCATION=$GOOGLE_CLOUD_LOCATION,GOOGLE_GENAI_USE_VERTEXAI=$GOOGLE_GENAI_USE_VERTEXAI
 ```
