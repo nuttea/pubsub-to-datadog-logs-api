@@ -78,7 +78,7 @@ response_schema = {
     "text": {
       "type": "string",
       "maxLength": 4000,
-      "description": "The body of the event. Limited to 4000 characters. The text supports markdown. To use markdown in the event text, start the text block with %%% \\n and end the text block with \\n %%%."
+      "description": "The body of the event. Limited to 4000 characters. The text must be in markdown. To use markdown in the event text, start the text block with %%% \\n and end the text block with \\n %%%. The topics that should be included are Event Description, AI Suggestions, etc."
     },
     "title": {
       "type": "string",
@@ -100,6 +100,7 @@ Here are the rules you must follow:
 - The output must conform to the response_schema.
 - Ensure that the data types and constraints specified in the schema are strictly followed.
 - If the pubsub message is not valid json, return an error message.
+- The text field. The body of the event. Limited to 4000 characters. The text must be in markdown. To use markdown in the event text, start the text block with %%%\\n and end the text block with \\n%%%. Use Markdown to write sections with headings with # like Event Description, AI Suggestions, Fun Facts, etc.
 
 Now, process the following Pub/Sub message:
 
